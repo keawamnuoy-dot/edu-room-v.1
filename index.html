@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#edf6ff">
+    <meta name="description" content="ระบบจองห้องประชุม คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย">
+    <title>EduRoom — ระบบจองห้องประชุม</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <div class="app-splash" id="appSplash" role="status" aria-live="polite" aria-label="กำลังโหลด EduRoom">
+      <div class="splash-card">
+        <img class="splash-logo" src="assets/Edu-LOGO.png" alt="ตราสัญลักษณ์คณะครุศาสตร์">
+        <div class="splash-brand">
+          <strong>EduRoom</strong>
+          <span>ระบบจองห้องประชุม</span>
+          <small>คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</small>
+        </div>
+        <div class="splash-loading"><span class="splash-spinner"></span><span>กำลังเข้าสู่ระบบ</span><strong id="splashCountdown">3</strong></div>
+      </div>
+    </div>
+
+    <main class="login-screen" id="loginScreen" hidden>
+      <section class="login-showcase">
+        <a class="login-brand" href="#" aria-label="EduRoom">
+          <img class="brand-mark" src="assets/crru-education-emblem.jpg" alt="">
+          <span class="brand-copy"><strong>EduBookingRoom</strong><small>FACULTY OF EDUCATION · CRRU</small></span>
+        </a>
+        <div class="showcase-heading">
+          <h1>ระบบจองห้องประชุม คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</h1>
+          <p>ตรวจสอบตารางใช้งานและรายละเอียดการจองห้องประชุม</p>
+        </div>
+        <section class="login-preview" aria-label="ตัวอย่างปฏิทินและรายละเอียดการจอง">
+          <article class="login-calendar-card">
+            <div class="login-preview-heading"><div><span>ROOM SCHEDULE</span><h2 id="loginCalendarMonth">ปฏิทินการใช้ห้อง</h2></div><span class="login-calendar-icon" aria-hidden="true">▦</span></div>
+            <div class="login-calendar-grid" id="loginCalendarGrid" aria-label="ปฏิทินรายเดือน"></div>
+            <div class="login-calendar-legend"><span><i></i>มีรายการจอง</span><span><i></i>วันนี้</span></div>
+          </article>
+          <article class="login-bookings-card">
+            <div class="login-preview-heading"><div><span>UPCOMING BOOKINGS</span><h2>รายละเอียดการจอง</h2></div><span class="booking-total">2 รายการ</span></div>
+            <div class="login-booking-item">
+              <div class="login-booking-date"><strong id="loginBookingDayOne">—</strong><small id="loginBookingMonthOne">—</small></div>
+              <div class="login-booking-copy"><strong>ประชุมวางแผนการสอน</strong><span>ห้องประชุมดอกปีบ · 12 คน</span><small>09:00–11:00 · อาคารคณะครุศาสตร์</small></div>
+              <span class="login-booking-status status-waiting">รออนุมัติ</span>
+            </div>
+            <div class="login-booking-item">
+              <div class="login-booking-date login-booking-date-approved"><strong id="loginBookingDayTwo">—</strong><small id="loginBookingMonthTwo">—</small></div>
+              <div class="login-booking-copy"><strong>อบรมพัฒนาสื่อการเรียนรู้</strong><span>ห้องประชุมพวงแสด · 55 คน</span><small>08:30–12:00 · อาคารเรียนรวม</small></div>
+              <span class="login-booking-status status-confirmed">อนุมัติแล้ว</span>
+            </div>
+            <div class="login-booking-foot"><span class="login-live-dot"></span>ข้อมูลตารางการใช้ห้องประชุม</div>
+          </article>
+        </section>
+        <div class="showcase-footer">คณะครุศาสตร์ · มหาวิทยาลัยราชภัฏเชียงราย</div>
+      </section>
+      <section class="login-panel">
+        <div class="login-card">
+          <div class="login-heading">
+            <img class="login-mark" src="assets/crru-education-emblem.jpg" alt="ตราสัญลักษณ์คณะครุศาสตร์">
+            <div><span class="eyebrow">ยินดีต้อนรับสู่ EDUROOMBOOKING</span><h2 id="loginHeading">เข้าสู่ระบบ</h2></div>
+          </div>
+          <p class="login-description" id="loginDescription">เข้าสู่ระบบเพื่อตรวจสอบและจองห้องประชุม</p>
+          <form id="loginForm" class="login-form">
+            <label class="login-field" for="loginEmail">USERNAME</label>
+            <div class="login-input-wrap"><span aria-hidden="true">✉</span><input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="name@crru.ac.th" required></div>
+            <div class="login-password-heading"><label class="login-field" for="loginPassword">PASSWORD</label></div>
+            <div class="login-input-wrap"><span aria-hidden="true">⌑</span><input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="กรอกรหัสผ่าน" required><button class="password-toggle" id="togglePassword" type="button" aria-label="แสดงรหัสผ่าน">แสดง</button></div>
+            <p class="login-error" id="loginError" role="alert" hidden></p>
+            <button class="primary-button login-submit" type="submit"><center>เข้าสู่ระบบ </center><span aria-hidden="true">→</span></button>
+          </form>
+          <p class="auth-switch" id="loginSwitch">ยังไม่มีบัญชี? <button type="button" data-auth-view="register">สมัครสมาชิก</button></p>
+          <p class="login-notice"><span>ⓘ</span> ระบบตรวจสอบบัญชีและสิทธิ์ผ่านเซิร์ฟเวอร์ EduRoom</p>
+          <form id="registerForm" class="register-form" hidden>
+            <div class="register-grid">
+              <div class="register-field register-field-full"><label for="registerProfileImage">รูปโปรไฟล์<span>*</span></label><input id="registerProfileImage" name="profileImageFile" type="file" accept="image/jpeg,image/png,image/webp" required><img class="profile-image-preview" data-profile-preview alt="ตัวอย่างรูปโปรไฟล์" hidden><small>ไฟล์ JPG, PNG หรือ WebP ขนาดไม่เกิน 2 MB</small></div>
+              <div class="register-field"><label for="registerNamePrefix">คำนำหน้า<span>*</span></label><select id="registerNamePrefix" name="namePrefix" required><option value="">เลือกคำนำหน้า</option><option>ศาสตราจารย์</option><option>รองศาสตราจารย์</option><option>ผู้ช่วยศาสตราจารย์</option><option>อาจารย์ ดร.</option><option>อาจารย์</option><option>นาย</option><option>นาง</option><option>นางสาว</option></select></div>
+              <div class="register-field"><label for="registerName">ชื่อ–นามสกุล<span>*</span></label><input id="registerName" name="name" autocomplete="name" maxlength="100" placeholder="ชื่อและนามสกุล" required></div>
+              <div class="register-field"><label for="registerMemberType">สถานะสมาชิก<span>*</span></label><select id="registerMemberType" name="memberType" required><option value="">เลือกสถานะ</option><option value="instructor">อาจารย์</option><option value="staff">เจ้าหน้าที่</option><option value="student">นักศึกษา</option><option value="external">บุคลากรภายนอก</option></select></div>
+              <div class="register-field"><label for="registerDepartment">หน่วยงาน / สาขาวิชา<span>*</span></label><input id="registerDepartment" name="department" autocomplete="organization-title" maxlength="100" placeholder="เช่น สาขาวิชาการประถมศึกษา" required></div>
+              <div class="register-field"><label for="registerEmail">อีเมลมหาวิทยาลัย<span>*</span></label><input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="name@crru.ac.th" required></div>
+              <div class="register-field"><label for="registerPhone">เบอร์โทรศัพท์<span>*</span></label><input id="registerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="08X-XXX-XXXX" required></div>
+              <div class="register-field"><label for="registerPassword">ตั้งรหัสผ่าน<span>*</span></label><input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="อย่างน้อย 8 ตัวอักษร" required></div>
+              <div class="register-field"><label for="registerPasswordConfirm">ยืนยันรหัสผ่าน<span>*</span></label><input id="registerPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" maxlength="72" placeholder="กรอกรหัสผ่านอีกครั้ง" required></div>
+            </div>
+            <label class="register-consent"><input name="consent" type="checkbox" required><span>ยืนยันว่าข้อมูลข้างต้นถูกต้อง และใช้สำหรับการจองห้องประชุมของคณะครุศาสตร์</span></label>
+            <p class="login-error" id="registerError" role="alert" hidden></p>
+            <button class="primary-button login-submit" type="submit">สมัครสมาชิก <span aria-hidden="true">→</span></button>
+            <p class="auth-switch register-switch">มีบัญชีอยู่แล้ว? <button type="button" data-auth-view="login">เข้าสู่ระบบ</button></p>
+            <p class="register-notice">บัญชีสมัครใหม่จะได้รับสิทธิ์ผู้จองเท่านั้น การกำหนดสิทธิ์ผู้อนุมัติและเจ้าหน้าที่ต้องดำเนินการโดยผู้ดูแลระบบ</p>
+          </form>
+        </div>
+        <div class="login-copyright">© 2026 คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</div>
+      </section>
+    </main>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" data-page="dashboard" aria-label="EduRoom หน้าหลัก">
+          <img class="brand-mark" src="assets/crru-education-emblem.jpg" alt="">
+          <span class="brand-copy"><strong>EduRoomBooking</strong><small>EDUCATION · CRRU</small></span>
+        </a>
+        <div class="workspace-label">WORKSPACE</div>
+        <div class="workspace-card">
+          <span class="workspace-icon">ค</span>
+          <span><strong>คณะครุศาสตร์</strong><small>มหาวิทยาลัยราชภัฏเชียงราย</small></span>
+          <span class="chevron">⌄</span>
+        </div>
+        <nav class="main-nav" aria-label="เมนูหลัก">
+          <div class="nav-group-label" data-nav-group="main">เมนูหลัก</div>
+          <a href="#" class="nav-link active" data-nav-group="main" data-page="dashboard"><span class="nav-icon">⌂</span>ภาพรวม</a>
+          <a href="#" class="nav-link" data-nav-group="main" data-page="rooms"><span class="nav-icon">▦</span>ห้องประชุม</a>
+          <a href="#" class="nav-link" data-nav-group="main" data-page="bookings"><span class="nav-icon">▤</span>การจองของฉัน<span class="nav-count" id="myBookingCount">0</span></a>
+          <a href="#" class="nav-link" data-nav-group="main" data-page="calendar"><span class="nav-icon">▦</span>ปฏิทินการใช้ห้อง</a>
+          <div class="nav-group-label nav-group-spaced" data-nav-group="operations">การดำเนินงาน</div>
+          <a href="#" class="nav-link" data-nav-group="operations" data-page="approvals"><span class="nav-icon">☷</span>คิวอนุมัติ<span class="nav-count nav-count-warm" id="approvalCount">0</span></a>
+          <a href="#" class="nav-link" data-nav-group="operations" data-page="staff"><span class="nav-icon">⚒</span>เตรียมห้องประชุม<span class="nav-count nav-count-alert" id="staffTaskCount" aria-live="polite" hidden>0</span></a>
+          <div class="nav-group-label nav-group-spaced" data-nav-group="settings">ตั้งค่าระบบ</div>
+          <a href="#" class="nav-link" data-nav-group="settings" data-page="manage"><span class="nav-icon">⚙</span>จัดการห้อง</a>
+          <a href="#" class="nav-link" data-nav-group="settings" data-page="settings"><span class="nav-icon">☷</span>กฎและการแจ้งเตือน</a>
+          <a href="#" class="nav-link" data-nav-group="settings" data-page="members"><span class="nav-icon">♙</span>จัดการสมาชิกทั้งหมด</a>
+          <a href="#" class="nav-link" data-nav-group="settings" data-page="statistics"><span class="nav-icon">▥</span>สรุปสถิติรายเดือน</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="help-card"><span class="help-icon">?</span><strong>ต้องการความช่วยเหลือ?</strong><small>ติดต่อเจ้าหน้าที่คณะครุศาสตร์</small><a href="mailto:edu@crru.ac.th">edu@crru.ac.th <span>↗</span></a></div>
+          <div class="sidebar-foot"><span class="online-dot"></span>ระบบพร้อมใช้งาน <span class="version">v1.0</span></div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <button class="icon-button mobile-menu" id="mobileMenu" aria-label="เปิดเมนู">☰</button>
+          <div class="breadcrumbs"><span>คณะครุศาสตร์</span><span class="crumb-sep">/</span><strong id="pageCrumb">ภาพรวม</strong></div>
+          <div class="top-actions">
+            <button class="today-chip" id="todayButton"><span>◷</span><span id="todayLabel"></span></button>
+            <button class="icon-button notification-button" id="notificationButton" aria-label="การแจ้งเตือน">♧<i id="notificationDot"></i></button>
+            <div class="font-size-controls" role="group" aria-label="ปรับขนาดตัวอักษร">
+              <button class="font-size-button" id="fontSizeDecrease" type="button" aria-label="ลดขนาดตัวอักษร" title="ลดขนาดตัวอักษร">A−</button>
+              <span class="font-size-value" id="fontSizeValue" aria-live="polite">110%</span>
+              <button class="font-size-button" id="fontSizeIncrease" type="button" aria-label="เพิ่มขนาดตัวอักษร" title="เพิ่มขนาดตัวอักษร">A+</button>
+              <button class="font-size-reset" id="fontSizeReset" type="button" aria-label="คืนค่าขนาดตัวอักษรปกติ" title="คืนค่าขนาดปกติ">↺</button>
+            </div>
+            <span class="top-divider"></span>
+            <div class="profile-area">
+              <button class="profile-button" id="profileButton" aria-expanded="false" aria-controls="profileMenu"><span class="avatar" id="userAvatar">น</span><span class="profile-copy"><strong id="userName">นภัสสร ใจดี</strong><small id="userRole">บุคลากรคณะครุศาสตร์</small></span><span class="chevron">⌄</span></button>
+              <div class="profile-menu" id="profileMenu" hidden>
+                <div class="profile-menu-user"><span class="avatar" id="menuAvatar">น</span><span><strong id="menuUserName">นภัสสร ใจดี</strong><small id="menuUserEmail">napatsorn@crru.ac.th</small></span></div>
+                  <button class="logout-button" id="editProfileButton" type="button" data-action="edit-profile" hidden><span aria-hidden="true">✎</span>แก้ไขข้อมูลส่วนตัว</button>
+                  <button class="logout-button" id="legacyMigration" type="button" data-action="migrate-local-data" hidden>นำเข้าข้อมูลเดิมจากเบราว์เซอร์</button>
+                  <button class="logout-button" type="button" data-action="logout"><span aria-hidden="true">↪</span>ออกจากระบบ</button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="page-content" id="pageContent"></div>
+        <footer class="app-footer"><span>© 2026 คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</span><span>ระบบจองห้องประชุม <b>EduRoom</b></span></footer>
+      </main>
+    </div>
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <section class="modal-panel" id="modalPanel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></section>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

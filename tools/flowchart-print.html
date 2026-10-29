@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <title>Flowchart การใช้งานระบบ EduRoom</title>
+  <style>
+    @page { size: A3 landscape; margin: 8mm; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #fff; color: #16324f; font-family: Tahoma, sans-serif; }
+    main { width: 100%; }
+    svg { display: block; width: 100%; height: auto; }
+    .title { font-size: 34px; font-weight: 700; fill: #123b63; }
+    .subtitle { font-size: 18px; fill: #50677d; }
+    .lane { fill: #f5faff; stroke: #d7e8f6; stroke-width: 2; }
+    .lane.admin { fill: #f8fbff; }
+    .lane.staff { fill: #f5fbfa; stroke: #d8ece7; }
+    .lane-title { font-size: 22px; font-weight: 700; fill: #145a91; }
+    .lane.staff-title { fill: #17715d; }
+    .node { fill: #fff; stroke: #3783bd; stroke-width: 2.5; rx: 15; }
+    .node.approved { stroke: #249471; fill: #f2fbf7; }
+    .node.reject { stroke: #d77777; fill: #fff7f7; }
+    .node-text { font-size: 18px; font-weight: 700; text-anchor: middle; fill: #173a59; }
+    .small-text { font-size: 15px; font-weight: 400; fill: #4a6278; }
+    .decision { fill: #fff8e9; stroke: #d59a2a; stroke-width: 2.5; }
+    .edge { fill: none; stroke: #56758e; stroke-width: 3; marker-end: url(#arrow); }
+    .edge.green { stroke: #249471; marker-end: url(#arrowGreen); }
+    .edge.red { stroke: #cf6a6a; marker-end: url(#arrowRed); }
+    .edge-label { font-size: 15px; font-weight: 700; fill: #50677d; }
+    .note { fill: #eef6fd; stroke: #c9e0f2; stroke-width: 1.5; rx: 12; }
+    .note-text { font-size: 15px; fill: #355773; }
+    .footer { font-size: 14px; fill: #63788a; }
+    @media screen {
+      body { padding: 20px; background: #eaf1f7; }
+      main { max-width: 1600px; margin: auto; background: white; box-shadow: 0 5px 22px #15334a22; }
+    }
+  </style>
+</head>
+<body>
+<main>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 1160" role="img" aria-label="Flowchart การใช้งานระบบจองห้องประชุม EduRoom">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#56758e"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#249471"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#cf6a6a"/>
+    </marker>
+  </defs>
+
+  <text class="title" x="70" y="58">Flowchart การใช้งานระบบ EduRoom</text>
+  <text class="subtitle" x="72" y="88">ระบบจองห้องประชุม คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</text>
+
+  <rect class="lane" x="50" y="112" width="1580" height="248" rx="20"/>
+  <text class="lane-title" x="78" y="148">1. ผู้จอง — ส่งคำขอจองห้อง</text>
+
+  <rect class="node" x="85" y="190" width="190" height="94"/>
+  <text class="node-text" x="180" y="229"><tspan x="180">เข้าสู่ระบบ</tspan><tspan x="180" dy="26" class="small-text">หรือสมัครสมาชิก</tspan></text>
+  <path class="edge" d="M275 237 H310"/>
+
+  <rect class="node" x="315" y="190" width="205" height="94"/>
+  <text class="node-text" x="417" y="229"><tspan x="417">เลือกห้อง</tspan><tspan x="417" dy="26" class="small-text">ดูข้อมูลและปฏิทิน</tspan></text>
+  <path class="edge" d="M520 237 H555"/>
+
+  <rect class="node" x="560" y="190" width="220" height="94"/>
+  <text class="node-text" x="670" y="225"><tspan x="670">กรอกรายละเอียด</tspan><tspan x="670" dy="25" class="small-text">หัวข้อ วัตถุประสงค์</tspan><tspan x="670" dy="21" class="small-text">จำนวนคน อุปกรณ์</tspan></text>
+  <path class="edge" d="M780 237 H815"/>
+
+  <rect class="node" x="820" y="190" width="220" height="94"/>
+  <text class="node-text" x="930" y="225"><tspan x="930">กำหนดวันและเวลา</tspan><tspan x="930" dy="25" class="small-text">หลายวันใช้เวลาเดียวกัน</tspan><tspan x="930" dy="21" class="small-text">แนบลายเซ็นเมื่อกำหนด</tspan></text>
+  <path class="edge" d="M1040 237 H1073"/>
+
+  <polygon class="decision" points="1155,180 1235,237 1155,294 1075,237"/>
+  <text class="node-text" x="1155" y="230"><tspan x="1155">ข้อมูลครบ</tspan><tspan x="1155" dy="23">และห้องว่าง?</tspan></text>
+  <text class="edge-label" x="1240" y="222">ใช่</text>
+  <path class="edge" d="M1235 237 H1280"/>
+
+  <rect class="node approved" x="1285" y="190" width="285" height="94"/>
+  <text class="node-text" x="1427" y="225"><tspan x="1427">บันทึกคำขอ</tspan><tspan x="1427" dy="25" class="small-text">สถานะรออนุมัติ</tspan><tspan x="1427" dy="21" class="small-text">ผู้จองติดตามรายการได้</tspan></text>
+  <text class="edge-label" x="1170" y="321">ไม่ผ่าน</text>
+  <path class="edge red" d="M1155 294 V324 H1000"/>
+  <rect class="note" x="710" y="302" width="285" height="42" rx="12"/>
+  <text class="note-text" x="852" y="328" text-anchor="middle">แก้รายละเอียดหรือเลือกเวลาใหม่</text>
+  <path class="edge red" d="M710 323 H690 V295 H930 V287"/>
+
+  <rect class="lane admin" x="50" y="382" width="1580" height="350" rx="20"/>
+  <text class="lane-title" x="78" y="420">2. ผู้อนุมัติ — ตรวจคำขอและตัดสินใจ</text>
+  <path class="edge" d="M1427 284 V435 H130 V472"/>
+  <text class="edge-label" x="1335" y="425">แจ้งคำขอทางอีเมลและในระบบ</text>
+
+  <rect class="node" x="75" y="475" width="205" height="94"/>
+  <text class="node-text" x="177" y="514"><tspan x="177">Admin / Super Admin</tspan><tspan x="177" dy="26" class="small-text">เปิดคิวและตรวจคำขอ</tspan></text>
+  <path class="edge" d="M280 522 H320"/>
+
+  <polygon class="decision" points="400,462 480,522 400,582 320,522"/>
+  <text class="node-text" x="400" y="516"><tspan x="400">ผลการ</tspan><tspan x="400" dy="23">พิจารณา?</tspan></text>
+
+  <text class="edge-label" x="420" y="605">ไม่อนุมัติ</text>
+  <path class="edge red" d="M400 582 V620 H540"/>
+  <rect class="node reject" x="545" y="596" width="265" height="94"/>
+  <text class="node-text" x="677" y="633"><tspan x="677">ระบุเหตุผล</tspan><tspan x="677" dy="25" class="small-text">แจ้งผลแก่ผู้จองในระบบ</tspan></text>
+
+  <text class="edge-label" x="486" y="480">อนุมัติ</text>
+  <path class="edge green" d="M480 522 H515"/>
+  <rect class="node" x="520" y="475" width="205" height="94"/>
+  <text class="node-text" x="622" y="514"><tspan x="622">เลือก Staff</tspan><tspan x="622" dy="26" class="small-text">ผู้รับงานเตรียมห้อง</tspan></text>
+  <path class="edge green" d="M725 522 H760"/>
+
+  <polygon class="decision" points="840,462 920,522 840,582 760,522"/>
+  <text class="node-text" x="840" y="516"><tspan x="840">ตรวจเวลา</tspan><tspan x="840" dy="23">ซ้ำอีกครั้ง</tspan></text>
+  <text class="edge-label" x="925" y="480">ไม่ชน</text>
+  <path class="edge green" d="M920 522 H955"/>
+
+  <rect class="node approved" x="960" y="475" width="230" height="94"/>
+  <text class="node-text" x="1075" y="514"><tspan x="1075">อนุมัติคำขอ</tspan><tspan x="1075" dy="26" class="small-text">ส่งงานให้ Staff ที่เลือก</tspan></text>
+  <path class="edge green" d="M1190 522 H1225"/>
+
+  <rect class="node approved" x="1230" y="475" width="300" height="94"/>
+  <text class="node-text" x="1380" y="514"><tspan x="1380">แจ้ง Staff ทางอีเมล</tspan><tspan x="1380" dy="26" class="small-text">งานยังอยู่ในคิว หากอีเมลขัดข้อง</tspan></text>
+
+  <text class="edge-label" x="850" y="613">พบเวลาชน</text>
+  <path class="edge red" d="M840 582 V610 H812 V654 H815"/>
+  <path class="edge red" d="M1165 654 H1200 V438 H177 V470"/>
+  <rect class="note" x="820" y="628" width="345" height="52" rx="12"/>
+  <text class="note-text" x="992" y="650" text-anchor="middle"><tspan x="992">กลับไปตรวจคำขอ</tspan><tspan x="992" dy="18">หรือแจ้งผู้จองเพื่อพิจารณาใหม่</tspan></text>
+
+  <rect class="lane staff" x="50" y="754" width="1580" height="244" rx="20"/>
+  <text class="lane-title staff-title" x="78" y="792">3. Staff — รับงานและเตรียมห้องประชุม</text>
+  <path class="edge green" d="M1380 569 V820 H170 V835"/>
+  <text class="edge-label" x="1285" y="810">รับมอบหมายงาน</text>
+
+  <rect class="node approved" x="75" y="835" width="220" height="95"/>
+  <text class="node-text" x="185" y="874"><tspan x="185">เปิดคิวเตรียมห้อง</tspan><tspan x="185" dy="26" class="small-text">เห็นงานที่มอบหมาย</tspan></text>
+  <path class="edge green" d="M295 882 H350"/>
+
+  <rect class="node approved" x="355" y="835" width="215" height="95"/>
+  <text class="node-text" x="462" y="874"><tspan x="462">กดรับงาน</tspan><tspan x="462" dy="26" class="small-text">สถานะรับงานแล้ว</tspan></text>
+  <path class="edge green" d="M570 882 H625"/>
+
+  <rect class="node approved" x="630" y="835" width="235" height="95"/>
+  <text class="node-text" x="747" y="874"><tspan x="747">เริ่มจัดเตรียมห้อง</tspan><tspan x="747" dy="26" class="small-text">อัปเดตความคืบหน้า</tspan></text>
+  <path class="edge green" d="M865 882 H920"/>
+
+  <rect class="node approved" x="925" y="835" width="235" height="95"/>
+  <text class="node-text" x="1042" y="874"><tspan x="1042">ยืนยันเตรียมเสร็จ</tspan><tspan x="1042" dy="26" class="small-text">ปิดขั้นตอนงาน Staff</tspan></text>
+  <path class="edge green" d="M1160 882 H1215"/>
+
+  <rect class="node approved" x="1220" y="835" width="310" height="95"/>
+  <text class="node-text" x="1375" y="874"><tspan x="1375">ดูรายการในปฏิทิน</tspan><tspan x="1375" dy="26" class="small-text">แสดงการจองที่อนุมัติแล้ว</tspan></text>
+
+  <rect class="note" x="70" y="1020" width="1540" height="76" rx="14"/>
+  <text class="note-text" x="95" y="1049"><tspan font-weight="700">ผู้ดูแลระบบ:</tspan><tspan> Admin จัดการห้องและอนุมัติคำขอ · Super Admin จัดการสมาชิก นโยบาย ห้อง และข้อมูลระบบ</tspan></text>
+  <text class="note-text" x="95" y="1078"><tspan font-weight="700">หมายเหตุ:</tspan><tspan> ระบบตรวจเวลาซ้ำตอนส่งคำขอและตรวจอีกครั้งก่อนอนุมัติ · แจ้งผลไม่อนุมัติในระบบ · อีเมลขัดข้องไม่ยกเลิกรายการ</tspan></text>
+  <text class="footer" x="70" y="1132">EduRoom · คณะครุศาสตร์ มหาวิทยาลัยราชภัฏเชียงราย</text>
+</svg>
+</main>
+</body>
+</html>

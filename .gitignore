@@ -1,0 +1,10 @@
+.vscode/
+*.log
+*.tmp
+*.backup*
+.env
+.env.*
+php-error.log
+sendmail.ini
+Thumbs.db
+.DS_Store
