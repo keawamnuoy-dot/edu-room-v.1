@@ -1,0 +1,10 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<FilesMatch "^(config\.php)$">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "^(schema\.sql|schema\.postgresql\.sql)$">
+  Require all denied
+</FilesMatch>

@@ -115,10 +115,13 @@
       body: payload === null ? undefined : JSON.stringify(payload)
     });
     let result;
+    const contentType = response.headers.get("content-type") || "";
+    const responseText = await response.text();
     try {
-      result = await response.json();
+      result = JSON.parse(responseText);
     } catch {
-      throw new Error("เซิร์ฟเวอร์ส่งข้อมูลกลับมาไม่ถูกต้อง กรุณาตรวจสอบ PHP API");
+      const preview = responseText.trim().slice(0, 80);
+      throw new Error(`เซิร์ฟเวอร์ส่งข้อมูลไม่ถูกต้อง: ต้องใช้ PHP API ไม่ใช่ Static Site (${response.status}, ${contentType || "ไม่มี Content-Type"}${preview ? `, ${preview}` : ""})`);
     }
     if (result.csrfToken) csrfToken = result.csrfToken;
     if (!response.ok) throw new Error(result.error || `คำขอไม่สำเร็จ (${response.status})`);

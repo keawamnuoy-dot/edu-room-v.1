@@ -6,6 +6,12 @@
 
 ตราสัญลักษณ์คณะครุศาสตร์ที่หน้าเข้าสู่ระบบและแถบเมนูใช้ไฟล์ใน `assets/crru-education-emblem.jpg` ซึ่งดาวน์โหลดจากเว็บไซต์คณะเพื่อให้ระบบแสดงผลจากเซิร์ฟเวอร์ภายใน
 
+## แก้ปัญหา "เซิร์ฟเวอร์ส่งข้อมูลกลับมาไม่ถูกต้อง"
+
+หาก `/api/index.php?action=session` แสดงซอร์สโค้ด `<?php` แสดงว่า Render ยังเป็น Static Site ให้เปลี่ยน Service เป็น Web Service runtime Docker จากนั้นเปิด `/api/health.php` ซึ่งต้องคืน JSON เช่น `{"status":"ok","runtime":"php","driver":"pgsql","database":"connected"}`
+
+หาก Health Check คืน `503` ให้ตรวจ `DATABASE_URL` และ Logs ของ Service
+
 ## Deploy บน Render
 
 ไฟล์ `Dockerfile`, `docker-entrypoint.sh` และ `render.yaml` เพิ่ม PHP 8.3 Apache และ PDO drivers สำหรับ PostgreSQL กับ MySQL/MariaDB
