@@ -6,6 +6,20 @@
 
 ตราสัญลักษณ์คณะครุศาสตร์ที่หน้าเข้าสู่ระบบและแถบเมนูใช้ไฟล์ใน `assets/crru-education-emblem.jpg` ซึ่งดาวน์โหลดจากเว็บไซต์คณะเพื่อให้ระบบแสดงผลจากเซิร์ฟเวอร์ภายใน
 
+## Deploy บน Render
+
+ไฟล์ `Dockerfile`, `docker-entrypoint.sh` และ `render.yaml` เพิ่ม PHP 8.3 Apache และ PDO drivers สำหรับ PostgreSQL กับ MySQL/MariaDB
+
+สำหรับ Render PostgreSQL ให้สร้างหรือเชื่อม database จาก `render.yaml`, ตั้ง `DATABASE_URL` เป็น Render Internal Database URL แล้ว Deploy ระบบ ตัว entrypoint จะรัน `api/schema.postgresql.sql` โดยอัตโนมัติ
+
+หลัง Deploy สำเร็จ เปิด Render Shell แล้วสร้าง Super Admin:
+
+```bash
+php tools/create-account.php admin@crru.ac.th "ผู้ดูแลระบบ" super_admin
+```
+
+สำหรับ MariaDB/MySQL ภายนอก สามารถตั้ง `DATABASE_URL` เช่น `mysql://USER:PASSWORD@HOST:3306/DBNAME`, รัน `api/schema.sql` บนฐานข้อมูลนั้น และ Deploy ด้วย Docker runtime
+
 ## ติดตั้งบน XAMPP
 
 1. เริ่ม Apache และ MySQL ใน XAMPP แล้วตรวจว่าใช้ฐานข้อมูล `bookking_name` ที่ถูกต้อง

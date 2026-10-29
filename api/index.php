@@ -360,15 +360,14 @@ function persistState(PDO $db, array $old, array $next, bool $insert = false): v
         $deleteRoom->execute([$id]);
     }
 
-    $upsertRoom = $db->prepare(
+    $deleteRoomById = $db->prepare('DELETE FROM rooms WHERE room_id = ?');
+    $insertRoom = $db->prepare(
         'INSERT INTO rooms (room_id, name, room_number, building, capacity, status, description, equipment, visual, image)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE name=VALUES(name), room_number=VALUES(room_number), building=VALUES(building),
-         capacity=VALUES(capacity), status=VALUES(status), description=VALUES(description),
-         equipment=VALUES(equipment), visual=VALUES(visual), image=VALUES(image)'
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     foreach ($newRooms as $id => $room) {
-        $upsertRoom->execute([
+        $deleteRoomById->execute([$id]);
+        $insertRoom->execute([
             $id, (string)($room['name'] ?? ''), (string)($room['number'] ?? ''), (string)($room['building'] ?? ''),
             max(0, (int)($room['capacity'] ?? 0)), ($room['status'] ?? '') === 'inactive' ? 'inactive' : 'active',
             (string)($room['description'] ?? ''),
@@ -378,24 +377,20 @@ function persistState(PDO $db, array $old, array $next, bool $insert = false): v
     }
 
     $findUser = $db->prepare('SELECT id FROM users WHERE email = ?');
-    $upsertBooking = $db->prepare(
+    $deleteBookingById = $db->prepare('DELETE FROM bookings WHERE booking_id = ?');
+    $insertBooking = $db->prepare(
         'INSERT INTO bookings (booking_id, room_id, user_id, user_name, user_email, department, title, purpose, attendees,
          start_date, end_date, start_time, end_time, equipment, note, signature, status, prep_status, approved_by,
          approved_at, rejection_reason, created_at, details)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE room_id=VALUES(room_id), user_id=VALUES(user_id), user_name=VALUES(user_name),
-         user_email=VALUES(user_email), department=VALUES(department), title=VALUES(title), purpose=VALUES(purpose),
-         attendees=VALUES(attendees), start_date=VALUES(start_date), end_date=VALUES(end_date), start_time=VALUES(start_time),
-         end_time=VALUES(end_time), equipment=VALUES(equipment), note=VALUES(note), signature=VALUES(signature),
-         status=VALUES(status), prep_status=VALUES(prep_status), approved_by=VALUES(approved_by), approved_at=VALUES(approved_at),
-         rejection_reason=VALUES(rejection_reason), created_at=VALUES(created_at), details=VALUES(details)'
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     $canonical = ['id', 'roomId', 'user', 'email', 'department', 'title', 'purpose', 'attendees', 'startDate', 'endDate', 'startTime', 'endTime', 'equipment', 'note', 'signature', 'status', 'prepStatus', 'createdAt', 'approvedBy', 'approvedAt', 'rejectionReason'];
     foreach ($newBookings as $id => $booking) {
         $findUser->execute([strtolower((string)($booking['email'] ?? ''))]);
         $ownerId = $findUser->fetchColumn();
         $details = array_diff_key($booking, array_flip($canonical));
-        $upsertBooking->execute([
+        $deleteBookingById->execute([$id]);
+        $insertBooking->execute([
             $id, ($booking['roomId'] ?? '') !== '' ? $booking['roomId'] : null, $ownerId ?: null,
             (string)($booking['user'] ?? ''), strtolower((string)($booking['email'] ?? '')),
             (string)($booking['department'] ?? ''), (string)($booking['title'] ?? ''),
@@ -741,7 +736,8 @@ function migrate(PDO $db, array $user, array $body): array
         }
         $inserted = 0;
         $skipped = 0;
-        $insertUser = $db->prepare('INSERT IGNORE INTO users (email, name, department, phone, password_hash, role) VALUES (?, ?, ?, ?, ?, "user")');
+        $findEmail = $db->prepare('SELECT id FROM users WHERE email = ?');
+        $insertUser = $db->prepare('INSERT INTO users (email, name, department, phone, password_hash, role) VALUES (?, ?, ?, ?, ?, ?)');
         foreach ($accounts as $account) {
             if (!is_array($account)) {
                 continue;
@@ -753,12 +749,18 @@ function migrate(PDO $db, array $user, array $body): array
                 $skipped++;
                 continue;
             }
+            $findEmail->execute([$email]);
+            if ($findEmail->fetchColumn()) {
+                $skipped++;
+                continue;
+            }
             $insertUser->execute([
                 $email,
                 $name,
                 mb_substr(trim((string)($account['department'] ?? '')), 0, 100),
                 substr(trim((string)($account['phone'] ?? '')), 0, 20),
                 password_hash($password, PASSWORD_DEFAULT),
+                'user',
             ]);
             $inserted += $insertUser->rowCount();
         }
